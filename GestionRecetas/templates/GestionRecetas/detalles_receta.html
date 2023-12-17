@@ -1,0 +1,158 @@
+{% extends "GestionRecetas/base.html" %}
+
+    {% load static %}
+    
+    {% load crispy_forms_tags %}
+
+    {% block title %}
+      Detalles receta
+    {% endblock %}
+
+    {% block content %}
+    <div class="container noprint">
+      <div class="row">
+        <div class="col-md-6 order-md-2">
+          <div class="container" style="height: 500px;">
+            <div class="row">
+              <div class="col align-self-start">
+                <button class="likes">{{ receta.numero_de_likes }} Like{{ receta.numero_de_likes|pluralize }}</button>
+              </div>
+
+              <div class="col align-self-end text-end">
+                {% if user.is_authenticated %}
+                  <form action="{% url 'receta_like' receta.id %}" method="POST">
+                    {% csrf_token %}
+                    {% if receta.liked %}
+                      <input type="submit" class="btn fs-5" style="color:rgb(67, 109, 67); background-color: rgba(245, 222, 179, 0.457);border-radius: 50%;" value="&#9829;">
+                    {% else %}                      
+                      <input type="submit" class="btn fs-5" style="color:rgb(67, 109, 67); background-color:  rgba(245, 222, 179, 0.457);border-radius: 50%;" value="&#9825;">
+                    {% endif %}
+                  </form>
+                {% endif %}
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col align-self-center">
+                <div id="titulo" class="align-items-center justify-content-center text-center px-2" style="padding-top: 20%;">
+                  <h1 class="featurette-heading display-3 "
+                    title="{{receta.titulo}}">
+                    {{ receta.titulo | truncatechars_html:30  }}
+                  </h1>
+                  <h1 class="featurette-heading display-6">
+                    de {{ receta.autor }}
+                  </h1>
+                  <hr class="linea" style="margin: auto;">
+                  <h5 style="padding-top: 5px;">{{ receta.updated|date:"d-m-y" }}</h5>
+                  <a class="fs-5" style="background-color: antiquewhite;" 
+                  href="javascript:copiarEnlace();"><i class="bi bi-box-arrow-up"></i>&nbsp;Compartir esta receta</a>
+                </div>
+              </div>
+            </div> 
+        </div>
+      </div>  
+      <div class="col-md-6 order-md-2">
+        {% if receta.imagen %}
+          <img src="{{ receta.imagen.url }}" class="img-fluid" 
+          style="width: 100%;
+                object-fit: cover;
+                object-position: center center;
+                height:500px
+                "
+          alt="foto receta">
+        {% endif %}
+      </div>
+      <div class="m-0 row justify-content-center">
+        <main class="col-auto p-5">
+
+          {% if form.errors %}
+              <p>Por favor revisa este campo</p>
+          {% endif %}
+        </main>
+      </div>
+    </div>
+  </div>
+
+    <div class="container p-5">
+      <div class="row">
+        <div class="col-md-6 order-md-2">
+          <h3 >INGREDIENTES</h3>
+          {{ receta.ingredientes_txt }}
+          <hr class="linea">
+          <div id="list">
+            <h5>
+              {% for ingrediente_cantidad in receta.cantidad.all %}
+                <input type="checkbox" name="ingrediente" value="{{ ingrediente.nombre }}"/>
+                {{ ingrediente_cantidad.cantidad }}
+                {{ ingrediente_cantidad.ingrediente.nombre }}
+                <br>
+              {% empty %}
+                <span>No hay ingredientes en la lista.</span>
+              {% endfor %}
+            </h5>
+            <br/>
+            <div class="row noprint">
+              <a href="javascript:selectAll();" style="color:rgba(200, 172, 134, 0.866);text-decoration: underline;">
+                <h5>Seleccionar todos</h5>
+              </a>
+            </div>
+            <br/>
+            <button class="button noprint">
+              <a style="color:white;" href="{% url 'addListaCompra' id=receta.id %}">
+                Añadir Lista Compra
+              </a>
+            </button>
+            
+        </div>
+        </div>
+        <div class="col-md-6 order-md-2">
+          <h3 >DESCRIPCIÓN</h3>
+          <hr class="linea">
+          <h5>{{ receta.descripcion }}</h5>
+          <br/>
+          {% if user.is_authenticated and editable %}
+          <button class="button">
+            <a style="color:white;" href="{% url 'editar' id=receta.id %}">
+            Editar
+            </a>
+          </button>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    <div class="p-5 my-0 text-center noprint">
+      <div class="p-5" style="background-color: blanchedalmond;">
+        <div class="row align-items-center justify-content-center pt-2">
+          <button class="button" 
+          style="width: 20%; height: 80%; background-color:rgba(200, 172, 134, 0.866)" 
+          onclick="printHTML()">🖨️&nbsp;&nbsp;&nbsp;IMPRIMIR RECETA
+          </button>
+        </div>
+      </div>
+    </div>
+
+   <!-- top recetas -->
+   <div class="row drop-top noprint">
+    <div class="col-1 col-lg-1"></div>
+    <div class="col-10 col-lg-10 p-0">
+      <div class="row align-items-start">
+        <h2 class="navy text-center my-4">Recetas más populares</h2>
+        <h4 class="text-center mobile-hide" style="color:rgb(150, 170, 126)">
+          Algunas palabras amables de amigos de Que Comemos Hoy a lo largo de los años.
+        </h4>
+        <div class="row row-cols-1 row-cols-lg-4 align-items-stretch py-1 mx-0">
+          {% for receta_top in top_recetas %}
+            {% include 'GestionRecetas/partials/_receta.html' with receta=receta_top %}
+          {% endfor %}    
+        </div>
+        <div class="row align-items-center justify-content-center mt-5">
+          <button class="button">
+            <a style="color:white;" href="{% url 'todasRecetas' %}">Todas las recetas</a>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="col-1 col-lg-1"></div>
+  </div>
+    
+  {% endblock %}

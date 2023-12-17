@@ -1,0 +1,49 @@
+{% extends "GestionRecetas/base.html" %}
+    {% load static %}
+    {% block title %}
+        Lista de Compra
+    {% endblock %}
+    
+    {% block content %}
+
+    <div class="container p-5 bg-body-tertiary">
+        <div class="row featurette mx-5 my-5">
+          <div class="col-md-6 order-md-2">
+            <div class="col-12 col-lg-12 p-0" style="min-height: 35rem;">  
+                <h1>Lista de compra</h1>
+                <br/>
+                {% for c in user.compra.all %}
+                <h5>
+                  ☑ {{ c.cantidad }}{{ c.ingrediente.nombre }}
+                </h5>
+                {% empty %}
+                  <h5>La lista se encuetra vacia.</h5>
+                {% endfor %}
+            </div>
+            {% if user.compra.all  %}
+              <button
+                class="button noprint"
+                onclick="printHTML()"
+                style="position:relative;">
+                  🖨️&nbsp;&nbsp;&nbsp;IMPRIMIR LISTA
+              </button>
+              <a class="noprint"
+                style="color:rgb(36, 116, 60);position: relative;text-decoration: underline;"
+                href="{% url 'vaciarListaCompra' %}">
+                Vaciar Lista Compra
+              </a>
+            {% endif%}
+
+          </div>
+          <div class="noprint col-md-6 order-md-2">
+            <img src="{% static 'GestionRecetas/images/compra.jpg' %}" 
+            style="width: 100%;
+                object-fit: cover;
+                object-position: center center;
+                height:630px"
+            alt="fundo">
+          </div>
+        </div>
+    </div>
+
+    {% endblock %}

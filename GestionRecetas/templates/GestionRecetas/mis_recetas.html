@@ -1,0 +1,35 @@
+{% extends "GestionRecetas/base.html" %}
+
+    {% load static %}
+
+    {% load crispy_forms_tags %}
+
+    {% block title %}
+      Mis recetas
+    {% endblock %}
+
+    {% block content %}
+    <div class="container">
+      <img src="{% static 'GestionRecetas/images/green.png' %}" 
+      alt="portada" 
+      width="100%">
+      <form class="d-flex col-auto align-items-center justify-content-center mt-2" role="search" 
+      action = "{% url 'buscar' %}" method="get" enctype="multipart/form-data">
+        <input class="form-control me-2" style="border-radius: 60px; width: 50%;" type="text"
+        placeholder="¿Qué comemos hoy?" aria-label="Search" name = "rct">
+        <button class="button" type="submit" value="Buscar">
+          Buscar
+        </button>
+      </form>
+    
+
+      <div class="row align-items-start">
+        <div class="row row-cols-1 row-cols-lg-4 align-items-stretch py-5 mx-0 px-5">
+          {% for receta in recetas %}
+            {% include 'GestionRecetas/partials/_receta.html' with receta=receta %}
+          {% endfor %}    
+        </div>
+      </div>
+    </div>
+    
+    {% endblock %}

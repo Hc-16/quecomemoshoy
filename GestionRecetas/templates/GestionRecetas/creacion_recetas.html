@@ -1,0 +1,49 @@
+{% extends "GestionRecetas/base.html" %}
+
+    {% load static %}
+
+    {% load crispy_forms_tags %}
+
+    {% block title %}
+       Creación de recetas
+    {% endblock %}
+    
+    {% block content %}
+    <div class="container p-3 bg-body-tertiary">
+        <div class="row featurette mx-5 my-5">
+          <div class="col-md-6 order-md-1" style="padding-right: 30px;">
+            <h1>Crear tu receta</h1>
+
+            {% if form.errors %}
+                <p>Por favor revisa este campo</p>
+            {% endif %}
+
+            <form action="{% url 'crear' %}" method="post" enctype="multipart/form-data">
+                
+                {% csrf_token %}
+                
+                <!-- {% if mensaje %}
+                    <p>Receta creado correctamente</p>
+                {% endif %} -->
+                {{ form.errors }}
+                {{ form.non_field_errors }}
+                <table>
+                    {{ form|crispy }}                   
+                </table>
+                <input class="button" type="submit" value="Crear">
+            </form> 
+          </div>
+          
+          <div class="col-md-6 order-md-2">
+            <img src="{% static 'GestionRecetas/images/chica.jpg' %}" 
+            style="width: 100%;
+                object-fit: cover;
+                object-position: center center;
+                height:630px"
+            alt="fundo">
+          </div>
+        </div>
+    </div>
+
+   
+    {% endblock %}

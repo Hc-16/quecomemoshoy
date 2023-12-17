@@ -1,0 +1,40 @@
+{% extends "GestionRecetas/base.html" %}
+
+    {% load static %}
+
+    {% load crispy_forms_tags %}
+
+    {% block title %}
+      Iniciar sesión
+    {% endblock %}
+
+    {% block content %}
+    </div>
+      <div class="row justify-content-center pt-5">
+        <main class="col-auto p-5" style="background-color: rgba(250, 245, 238, 0.867);">
+          <h1 class="h3 mb-3 fw-normal">Iniciar sesión</h1>
+          <form method="post" action="">
+            {% csrf_token %}
+            <div>
+              {% if messages %}
+                {% for mensaje in messages %}
+                <span class="alert alert-{{ mensaje.tags }}">
+                  {{mensaje}}
+                </span>
+                {% endfor %}
+              {% endif %}
+            </div>
+            <br/>   
+            {{form|crispy}}
+            <p style="font-size:small; text-decoration: underline;">¿Has olvidado la contraseña?
+              <a style="text-decoration:underline;" href="{% url 'Autenticacion' %}"></a>
+            </p>
+            <button class="button w-100 btn btn-lg btn-primary my-5" type="submit">Continuar</button>
+          </form>
+          <p>¿Eres nuevo?
+          <a style="text-decoration:underline;" href="{% url 'Autenticacion' %}">Empieza aquí</a>
+          </p>
+        </main>
+      </div>
+     
+   {% endblock %}

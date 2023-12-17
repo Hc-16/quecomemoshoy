@@ -1,0 +1,28 @@
+{% extends "GestionRecetas/base.html" %}
+
+    {% load static %}
+
+    {% load crispy_forms_tags %}
+
+    {% block title %}
+      Registro
+    {% endblock %}
+
+    {% block content %}
+      <div style="text-align: center;">
+        <h1 class="p-5" style="text-align:center; background-color: blanchedalmond;">
+          Te damos la bienvenida
+        </h1>
+      </div>
+      <div class="m-0 row justify-content-center">
+        <main class="col-auto">
+          <h1 class="h3 mb-3 fw-normal">Crear cuenta</h1>
+          <form method="post" action="">
+              {% csrf_token %}
+              {{form|crispy}}
+            <button class="button w-100 btn btn-lg btn-primary my-5" type="submit">Continuar</button>
+          </form>
+        </main>
+     </div>
+
+   {% endblock %}

@@ -1,0 +1,281 @@
+{% extends "GestionRecetas/base.html" %}
+
+    {% load static %}
+
+    {% block title %}
+      QueComemosHoy - Index
+    {% endblock %}
+
+    {% block content %}
+     
+      <div class="container">
+        <!--  -->
+        <div class="row drop-top">
+          <div class="col-1 col-lg-1"></div>
+          <div class="col-10 col-lg-10 p-0">
+            <div class="row align-items-start">
+              <div class="row row-cols-1 row-cols-lg-4 align-items-stretch py-5 mx-0">
+                <div class="efecto text-center">
+                <a href="{% url 'todasRecetas' %}">
+                  <img 
+                  src="{% static 'GestionRecetas/images/recetas.jpg' %}"
+                  style="width: 100%;
+                    object-fit: cover;
+                    object-position: center center;
+                    height:300px;
+                    border-radius: 10%;
+                    "
+                  alt="foto receta">
+                </a>
+                <h2 style="color:rgba(246, 173, 38, 0.727)">Recetas</h2>
+              </div>
+              <div class="efecto text-center">
+                <a href="{% url 'creacionRecetas' %}">
+                  <img src="{% static 'GestionRecetas/images/chef4.jpg' %}"
+                  style="width: 100%;
+                    object-fit: cover;
+                    object-position: center center;
+                    height:300px;
+                    border-radius: 10%;"
+                  alt="foto escribir">
+                </a>
+                <h2 style="color:rgba(246, 173, 38, 0.727)">Crear receta</h2>
+                </div>
+                <div class="efecto text-center">
+                <a href="{% url 'misRecetas' %}">
+                  <img src="{% static 'GestionRecetas/images/cut.jpg' %}"
+                  style="width: 100%;
+                    object-fit: cover;
+                    object-position: center center;
+                    height:300px;
+                    border-radius: 10%;"
+                  alt="foto salud">
+                </a>
+                <h2 style="color:rgba(246, 173, 38, 0.727)">Mis recetas</h2>
+                </div>
+                <div class="efecto text-center">
+                <a href="{% url 'listaCompra' %}">
+                  <img src="{% static 'GestionRecetas/images/mercado.jpg' %}"
+                  style="width: 100%;
+                    object-fit: cover;
+                    object-position: center center;
+                    height:300px;
+                    border-radius: 10%;"
+                  alt="foto yoga">
+                </a>
+                <h2 style="color:rgba(246, 173, 38, 0.727)">Lista compra</h2>
+              </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-1 col-lg-1"></div>
+        </div>
+
+        <!-- top recetas -->
+        <div class="row drop-top">
+          <div class="col-1 col-lg-1"></div>
+          <div class="col-10 col-lg-10 p-0">
+            <div class="row align-items-start">
+              <h2 class="navy text-center my-4">Recetas más populares</h2>
+              <h4 class="text-center mobile-hide" style="color:rgb(150, 170, 126)">
+              Las recetas más destacadas y populares de nuestros usuarios.
+              </h4>
+              <div class="row row-cols-1 row-cols-lg-4 align-items-stretch py-1 mx-0">
+                {% for receta in top_recetas %}
+                  {% include 'GestionRecetas/partials/_receta.html' with receta=receta %}
+                {% endfor %}    
+              </div>
+              <div class="row align-items-center justify-content-center mt-5">
+                <button class="button">
+                  <a style="color:white;" href="{% url 'todasRecetas' %}">Todas las recetas</a>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="col-1 col-lg-1"></div>
+        </div>
+
+        <div class="p-5 my-0 text-center">
+          <div class="p-5" style="background-color: blanchedalmond;">
+            <h1>¿Qué comemos hoy?
+                Inspírate y cocina con nosotros
+            </h1>
+            <div class="row align-items-center justify-content-center pt-2">
+              <button class="button" style="width: 20%; height: 80%; background-color:rgba(200, 172, 134, 0.866)">
+                <a class="dropdown-item" href="{% url 'Autenticacion' %}" style="color:white"> Suscríbeme</a>
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        <!-- ultimas recetas -->
+        <div class="row drop-top">
+          <div class="col-1 col-lg-1"></div>
+          <div class="col-10 col-lg-10 p-0">
+            <div class="row align-items-start">
+              <h2 class="navy text-center my-4">Nuestras ultimas recetas</h2>
+              <h4 class="text-center mobile-hide" style="color:rgb(150, 170, 126)">
+                Las más recientes y deliciosas recetas que han compartido nuestros usuarios.
+              </h4>
+              <div class="row row-cols-1 row-cols-lg-4 align-items-stretch py-1 mx-0">
+                {% for receta in ult_recetas %}
+                {% include 'GestionRecetas/partials/_receta.html' with receta=receta %}
+                {% endfor %}    
+              </div>
+              <div class="row align-items-center justify-content-center mt-5">
+                <button class="button" type="button">
+                  <a style="color:white;" href="{% url 'todasRecetas' %}">Todas las recetas</a>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="col-1 col-lg-1"></div>
+        </div>
+
+        <!-- podcasts -->
+        <a name="ancla-podcasts"></a>
+        <div class="row drop-top py-5">
+        <div class="col-1 col-lg-1"></div>
+        <div class="col-10 col-lg-10 p-0">
+          <div class="row align-items-start">
+            <h2 class="navy text-center my-4">Nuestros podcasts</h2>
+            <h4 class="text-center mobile-hide" style="color:rgb(150, 170, 126)">
+              Los últimos episodios de podcasts de nutrición y salud física.
+            </h4>
+            <div class="row row-cols-1 row-cols-lg-4 align-items-stretch py-1 mx-0">  
+                <a href="https://podcasts.apple.com/de/podcast/dr-matthias-riedl-so-geht-gesunde-ern%C3%A4hrung/id1645482785">
+                  <img src="{% static 'GestionRecetas/images/dr.webp' %}"
+                  style="width: 100%;
+                    object-fit: cover;
+                    object-position: center center;
+                    height:210px;
+                    border-radius: 10%;"
+                  alt="foto receta"/>
+                  #32: Wie man im Büro und unterwegs gesünder isst
+                </a>
+                <a href="https://podcasts.apple.com/es/podcast/de-piel-a-cabeza/id1554473285">
+                  <img src="{% static 'GestionRecetas/images/podcast_cabeza.webp' %}"
+                  style="width: 100%;
+                    object-fit: cover;
+                    object-position: center center;
+                    height:210px;
+                    border-radius: 10%;"
+                  alt="foto receta"/>
+                  #102: VITAMINAS - Todo lo que necesitas saber sobre alimentación y suplementos.
+                </a>
+                <a href="https://podcasts.apple.com/gb/podcast/nutrizi%C3%B3n-con-zeta/id1614234510">
+                  <img src="{% static 'GestionRecetas/images/zeta.webp' %}"
+                  style="width: 100%;
+                    object-fit: cover;
+                    object-position: center center;
+                    height:210px;
+                    border-radius: 10%;"
+                  alt="foto receta"/>
+                  29 jun 2022: Sin vegetales no hay paraiso
+                </a>
+                <a href="https://podcasts.apple.com/es/podcast/lo-que-t%C3%BA-digas-con-alex-fidalgo/id1245349669">
+                  <img src="{% static 'GestionRecetas/images/podcast_digas.webp' %}"
+                  style="width: 100%;
+                    object-fit: cover;
+                    object-position: center center;
+                    height:210px;
+                    border-radius: 10%;"
+                  alt="foto receta"/>
+                  #351: Ana Ibañez - ¡Así puedes entrenar tu cerebro!
+                </a>
+            </div>
+          </div>
+        </div>
+        <div class="col-1 col-lg-1"></div>
+      </div>
+      
+        <!-- chefs -->
+        <div class="row align-items-start">
+          <h2 class="navy text-center my-4">Nuestros Amigos</h2>
+          <h4 class="text-center mobile-hide" style="color:rgb(150, 170, 126)">
+            Algunas palabras amables de amigos de Que Comemos Hoy a lo largo de los años.
+          </h4>
+
+          <div class="row row-cols-1 row-cols-lg-3 align-items-stretch g-4 py-5 mx-2">
+            <div class="col d-flex flex-column align-items-center">
+              <img
+                src="{% static 'GestionRecetas/images/chef2.webp' %}"
+                class="card-img-top rounded-circle w-50"
+                alt="foto receta"/>
+              <div class="card-body d-flex flex-column align-items-center">
+                <h5 class="card-title mt-2" style="color:rgb(150, 170, 126)">Jamie Oliver</h5>
+                <p class="card-text">
+                  Que Comemos Hoy lo comenzó todo para mi.
+                </p>
+              </div>
+            </div>
+
+            <div class="col d-flex flex-column align-items-center">
+              <img
+                src="{% static 'GestionRecetas/images/chef1.webp' %}"
+                class="card-img-top rounded-circle w-50"
+                alt="foto receta"/>
+              <div class="card-body d-flex flex-column align-items-center">
+                <h5 class="card-title mt-2" style="color:rgb(150, 170, 126)">Ella Woodward</h5>
+                <p class="card-text">
+                  Que Comemos Hoy me ha ayudado mucho con mis recetas.
+                </p>
+              </div>  
+            </div>
+
+            <div class="col d-flex flex-column align-items-center">
+              <img
+                src="{% static 'GestionRecetas/images/julie.webp' %}"
+                class="card-img-top rounded-circle w-50"
+                alt="foto receta"/>
+              <div class="card-body d-flex flex-column align-items-center">
+                <h5 class="card-title mt-2" style="color:rgb(150, 170, 126)">Julie Andrieu</h5>
+                <p class="card-text">
+                  Antes no sabía cocinar y ahora soy un experto.
+                </p>
+              </div> 
+            </div>
+          </div>
+        </div>
+      
+        <!-- about -->
+        
+          <div class="featurette mx-0 my-5" style="display: flex; background-color:rgb(150, 170, 126);">
+            <div class="col-md-6 order-md-2">
+                <img src="{% static 'GestionRecetas/images/cocina.jpg' %}" 
+                style="width: 100%;
+                    object-fit: cover;
+                    object-position: center center;
+                    height: 500px;
+                   "
+                alt="foto cocina"> 
+            </div>
+             <div class="row align-items-center justify-content-center" style=" 
+             
+             padding: 40px;
+             padding-top: 5vh;
+             padding-bottom: 5vh;">
+         
+              <div class="col-12 col-lg-10" style="color:white">
+              <h2 class=" text-center">¿Qué Comemos Hoy?</h2>
+              <h3 class=" text-center">Innovación en la Cocina</h3>
+              <br/>
+              <div style="font-size: 19px;">
+                <p>
+                En Que Comemos Hoy, fomentamos una comunidad apasionada por la cocina, 
+                donde los usuarios pueden compartir sus experiencias, 
+                comentar recetas y descubrir nuevas ideas culinarias.
+                </p>
+                <p> 
+                Nuestra visión es crear un espacio digital donde la cocina se convierta en una expresión de creatividad y conexión social.  
+                </p>
+              </div> 
+          </div>
+        </div>
+            </div>
+          
+         
+        
+     
+      </div>
+    {% endblock %}

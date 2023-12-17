@@ -1,0 +1,66 @@
+{% extends "GestionRecetas/base.html" %}
+
+    {% load crispy_forms_tags %}
+
+    {% block title %}
+        Edición de recetas
+    {% endblock %}
+    
+    {% block content %}
+
+    <div class="m-0 row justify-content-center my-5">
+        <main class="col-auto bg-body-tertiary p-5">
+            <h1>Editar tu receta</h1>
+            {% if form.errors %}
+                <p>Por favor revisa este campo</p>
+            {% endif %}
+
+            <form action="{% url 'edicion' id=receta.id %}" method="post" enctype="multipart/form-data">   
+                {% csrf_token %}
+                {{ form.errors }}
+                {{ form.non_field_errors }}
+                <table>
+                    {{ form|crispy }}
+                </table>
+                <input class="btn btn-outline-primary" type="submit" value="Guardar">
+                <a
+                    class="btn btn-danger"
+                    data-bs-toggle="modal"
+                    data-bs-target="#eliminarModal"
+                    href="#">
+                    Eliminar
+                </a>     
+            </form>
+        </main>
+    </div>
+    <div id="eliminarModal" class="modal" tabindex="-1">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Borrar receta</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <p>¿Está seguro que desea borrar la receta <u>{{receta.titulo}}</u>?</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button
+                    id="delete_button"
+                    type="button"
+                    class="btn btn-danger"
+                    data-href-borrar="{% url 'eliminar' id=receta.id %}">
+                    Eliminar
+                </button>
+            </div>
+          </div>
+        </div>
+      </div>    
+    <script type="text/javascript">
+        document.getElementById("delete_button").addEventListener("click", function(event) {
+           // Run the delete routine
+           window.location.href = event.target.dataset.hrefBorrar;
+           return true;
+        });
+    </script>
+    {% endblock %}

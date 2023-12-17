@@ -1,0 +1,44 @@
+<div class="col d-flex flex-column mt-3">
+    <div style="width: 15rem; margin: auto;">
+      {% if receta.imagen %}
+      <a href="{% url 'detalles_receta' receta.id %}">
+        <img src="{{ receta.imagen.url }}"
+        style="width: 100%;
+          object-fit: cover;
+          object-position: center center;
+          height:210px;
+          border-radius: 10%;"
+        alt="foto receta"/>
+      </a>
+      {% endif %}
+      <div class="card-body">
+        <div style="text-align: right;">
+          <!-- LIKES -->
+          {% if user.is_authenticated %}
+          <form action="{% url 'receta_like' receta.id %}" method="POST">
+            {% csrf_token %}
+            {% if receta.liked %}
+            <button class="likes">{{ receta.numero_de_likes }} Like{{ receta.numero_de_likes|pluralize }}</button>
+            <input type="submit" class="btn fs-5" style="color:rgb(67, 109, 67);" value="&#9829;">
+            {% else %}
+            <button class="likes">{{ receta.numero_de_likes }} Like{{ receta.numero_de_likes|pluralize }}</button>
+            <input type="submit" class="btn fs-5" style="color:rgb(67, 109, 67);" value="&#9825;">
+            {% endif %}
+          </form>
+          {% else %}
+            <button class="a-login mt-2">
+              <a href="{% url 'signIn' %}?next={{request.path}}">
+                ¡Login para dar like!
+              </a>
+            </button><br>
+          {% endif %}
+        </div>
+        <h5 class="card-title">
+          <a style="color:rgba(246, 173, 38, 0.854)" href="{% url 'detalles_receta' receta.id %}">{{ receta.titulo }} de {{ receta.autor }}</a>
+        </h5>
+        <!-- <p class="card-text">
+          {{ receta.descripcion }}
+        </p> -->
+    </div>
+  </div>
+</div>

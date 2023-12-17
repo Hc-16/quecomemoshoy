@@ -1,0 +1,22 @@
+{% extends "GestionRecetas/base.html" %}
+
+    {% load crispy_forms_tags %}
+
+    {% block title %}
+        Busqueda de recetas
+    {% endblock %}
+
+    {% block content %}
+
+        <div class="m-0 row justify-content-center">
+
+            <form action = "/buscar/" method="get">
+                
+                <input type = "text" name = "rct">
+
+                <input type = "submit" value="Buscar">
+
+            </form>
+        </div>
+        
+    {% endblock %}
