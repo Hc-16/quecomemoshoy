@@ -36,9 +36,6 @@ SECRET_KEY = os.environ['SECRET_KEY']
 #DEBUG = True
 DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
 
-ALLOWED_HOSTS = []
-
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -157,8 +154,6 @@ LOGIN_URL = '/signIn'
 
 ALLOWED_HOSTS = ['*']
 
-
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
@@ -168,3 +163,6 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 # The URL to use when referring to static files (where they will be served from)
 STATIC_URL = '/static/'
 
+
+# During development/for this tutorial you can instead set just the base URL
+CSRF_TRUSTED_ORIGINS = ['https://*.railway.app']
