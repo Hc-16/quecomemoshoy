@@ -134,8 +134,8 @@ USE_TZ = True
 STATIC_URL = 'static/'
 
 MEDIA_URL = os.environ.get('MEDIA_URL', 'media/')
-#MEDIA_ROOT = os.environ.get('MEDIA_ROOT', (BASE_DIR/ 'media'))
-MEDIA_ROOT = "/database"
+MEDIA_ROOT = os.environ.get('MEDIA_ROOT', (BASE_DIR/ 'media'))
+#MEDIA_ROOT = "/database"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
