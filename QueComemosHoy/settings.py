@@ -39,7 +39,6 @@ SECRET_KEY = os.environ['SECRET_KEY']
 DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
 
 # Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -47,6 +46,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'cloudinary_storage',
+    'cloudinary',
     'GestionUsuarios',
     'GestionRecetas',
     'crispy_forms',
@@ -167,7 +168,6 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 # The URL to use when referring to static files (where they will be served from)
 STATIC_URL = '/static/'
 
-
 # During development/for this tutorial you can instead set just the base URL
 CSRF_TRUSTED_ORIGINS = ['https://*.railway.app']
 
@@ -177,3 +177,12 @@ if 'DATABASE_URL' in os.environ:
         conn_max_age=500,
         conn_health_checks=True,
     )
+
+if os.environ["ENVIRONMENT"] == "PRODUCTION":
+    DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME' : os.environ['CLOUD_NAME'],
+    'API_KEY' : os.environ['CLOUD_API_KEY'],
+    'API_SECRET' : os.environ['CLOUD_API_SECRET']
+}
